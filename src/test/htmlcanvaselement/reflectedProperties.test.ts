@@ -25,20 +25,19 @@ const test = anyTest as TestInterface<{
   element: HTMLCanvasElement;
 }>;
 
+class FakeOffscreenCanvas {
+  getContext(c: string): CanvasRenderingContext2D {
+    return ({} as unknown) as CanvasRenderingContext2D;
+  }
+}
+
 test.beforeEach(t => {
-  const document = createTestingDocument();
+  const document = createTestingDocument({ OffscreenCanvas: FakeOffscreenCanvas });
 
   t.context = {
     element: document.createElement('canvas') as HTMLCanvasElement,
   };
 });
-
-class OffscreenCanvas {
-  getContext(c: string): CanvasRenderingContext2D {
-    return ({} as unknown) as CanvasRenderingContext2D;
-  }
-}
-(global as any).OffscreenCanvas = OffscreenCanvas;
 
 testReflectedProperty({ width: [0] });
 testReflectedProperty({ height: [0] });

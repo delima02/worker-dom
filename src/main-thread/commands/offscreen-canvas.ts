@@ -4,6 +4,10 @@ import { MessageType } from '../../transfer/Messages';
 import { CommandExecutor } from './interface';
 import { OffscreenCanvasMutationIndex } from '../../transfer/TransferrableMutation';
 
+/**
+ * Processes the transfer of an auto-synchronized OffscreenCanvas to the worker thread.
+ * @param workerContext Used to message the worker referenced.
+ */
 export function OffscreenCanvasProcessor(workerContext: WorkerContext): CommandExecutor {
   return {
     execute(mutations: Uint16Array, startPosition: number, target: RenderableElement): number {
@@ -25,7 +29,6 @@ export function OffscreenCanvasProcessor(workerContext: WorkerContext): CommandE
       return startPosition + OffscreenCanvasMutationIndex.End;
     },
     print(mutations: Uint16Array, startPosition: number, target?: RenderableElement | null): Object {
-
       return {
         type: 'OFFSCREEN_CANVAS_INSTANCE',
         target,

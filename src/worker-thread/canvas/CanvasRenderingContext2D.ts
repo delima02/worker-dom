@@ -74,9 +74,11 @@ export class CanvasRenderingContext2DShim<ElementType extends HTMLElement> imple
    */
   private getOffscreenCanvasAsync(canvas: ElementType): Promise<void> {
     const deferred: { resolve?: (value?: {} | PromiseLike<{}>) => void; upgradePromise?: Promise<void> } = {};
-    let testMode = typeof addEventListener !== 'function'; // whether in testing environment
 
     const upgradePromise = new Promise(resolve => {
+      if (TEST_ENABLED) {
+        deferred.resolve = resolve;
+      }
       const messageHandler = ({ data }: { data: OffscreenCanvasToWorker }) => {
         if (
           data[TransferrableKeys.type] === MessageType.OFFSCREEN_CANVAS_INSTANCE &&
@@ -88,8 +90,8 @@ export class CanvasRenderingContext2DShim<ElementType extends HTMLElement> imple
         }
       };
 
-      if (testMode) {
-        deferred.resolve = resolve;
+      if (typeof addEventListener !== 'function' && !TEST_ENABLED) {
+        throw new Error('addEventListener not a function!');
       } else {
         addEventListener('message', messageHandler);
         transfer(canvas.ownerDocument as Document, [TransferrableMutationType.OFFSCREEN_CANVAS_INSTANCE, canvas[TransferrableKeys.index]]);
@@ -100,7 +102,8 @@ export class CanvasRenderingContext2DShim<ElementType extends HTMLElement> imple
       this.flushQueue();
     });
 
-    if (testMode) {
+    if (TEST_ENABLED) {
+      console.log('TEST IS ENABLED!');
       deferred.upgradePromise = upgradePromise;
       deferredUpgrades.set(canvas, deferred);
     }

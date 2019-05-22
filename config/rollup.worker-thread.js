@@ -19,6 +19,7 @@ import { terser } from 'rollup-plugin-terser';
 import replace from 'rollup-plugin-replace';
 import copy from 'rollup-plugin-copy';
 import { babelPlugin } from './rollup.plugins.js';
+import { TEST_BUNDLE_VALUE } from './rollup.utils.js';
 
 // Workers do not natively support ES Modules containing `import` or `export` statments.
 // So, here we continue to use the '.mjs' extension to indicate newer ECMASCRIPT support
@@ -39,6 +40,7 @@ const ESModules = [
       }),
       replace({
         DEBUG_ENABLED: false,
+        TEST_ENABLED: TEST_BUNDLE_VALUE,
       }),
       babelPlugin({
         transpileToES5: false,
@@ -65,6 +67,7 @@ const ESModules = [
       }),
       replace({
         DEBUG_ENABLED: false,
+        TEST_ENABLED: TEST_BUNDLE_VALUE,
       }),
       babelPlugin({
         transpileToES5: false,
@@ -87,6 +90,7 @@ const ESModules = [
       }),
       replace({
         DEBUG_ENABLED: true,
+        TEST_ENABLED: TEST_BUNDLE_VALUE,
       }),
       babelPlugin({
         transpileToES5: false,
@@ -108,6 +112,7 @@ const IIFEModules = [
     plugins: [
       replace({
         DEBUG_ENABLED: false,
+        TEST_ENABLED: TEST_BUNDLE_VALUE,
       }),
       babelPlugin({
         transpileToES5: true,
@@ -130,6 +135,7 @@ const IIFEModules = [
     plugins: [
       replace({
         DEBUG_ENABLED: true,
+        TEST_ENABLED: TEST_BUNDLE_VALUE,
       }),
       babelPlugin({
         transpileToES5: true,

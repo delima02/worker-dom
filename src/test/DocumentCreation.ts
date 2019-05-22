@@ -62,6 +62,8 @@ Object.defineProperty(global, 'StorageManager', {
   },
 });
 
+declare var OffscreenCanvas: any;
+
 const GlobalScope: GlobalScope = {
   navigator: {
     appCodeName: 'Mozilla',
@@ -117,6 +119,7 @@ const GlobalScope: GlobalScope = {
   HTMLTableRowElement,
   HTMLTableSectionElement,
   HTMLTimeElement,
+  OffscreenCanvas: typeof OffscreenCanvas === 'undefined' ? undefined : OffscreenCanvas,
 };
 
 /**

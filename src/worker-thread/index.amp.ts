@@ -129,6 +129,8 @@ const WHITELISTED_GLOBALS = [
   'unescape',
 ];
 
+declare var OffscreenCanvas: any;
+
 const globalScope: GlobalScope = {
   navigator: (self as WorkerGlobalScope).navigator,
   localStorage: {},
@@ -167,6 +169,7 @@ const globalScope: GlobalScope = {
   HTMLTableRowElement,
   HTMLTableSectionElement,
   HTMLTimeElement,
+  OffscreenCanvas: typeof OffscreenCanvas === 'undefined' ? undefined : OffscreenCanvas,
 };
 
 // WorkerDOM.Document.defaultView ends up being the window object.

@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+declare const DEBUG_ENABLED: boolean;
+declare const TEST_ENABLED: boolean;
+
 import { HTMLElement } from './dom/HTMLElement';
 import { SVGElement } from './dom/SVGElement';
 import { Text } from './dom/Text';
@@ -21,4 +24,3 @@ import { Comment } from './dom/Comment';
 
 type RenderableElement = HTMLElement | SVGElement | Text | Comment;
 type PostMessage = (message: any, transfer?: Transferable[]) => void;
-declare const DEBUG_ENABLED: boolean;
